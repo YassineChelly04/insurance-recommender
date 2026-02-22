@@ -171,4 +171,3 @@ You **can** add extra packages via `requirements.txt`. You **cannot** override p
 | Execution timeout    | 120 s  |
 | Submissions per team | 20     |
 
-Good luck!
