@@ -1,0 +1,248 @@
+Documentation
+Everything you need for the DataQuest hackathon — how to submit, how scoring works, and what’s expected in each phase.
+
+Introduction
+What is Evalda?
+Evalda is the automated judge platform for the DataQuest hackathon, organized by the IEEE INSAT SB Computer Society Chapter and ACM INSAT. You train a machine learning model, submit it, and Evalda runs it against a hidden validation set — returning your score in real time.
+
+Competition Format
+DataQuest is a 10-hour, 2-phase hackathon.
+
+1.
+Phase 1 — Model (7 hours): Train your ML model on the provided dataset. Write the 3 required functions in solution.py. Package it with your model file and requirements.txt, zip, and submit. Evalda runs your code and scores it automatically.
+2.
+Phase 2 — Application (3 hours): Build an inference API and a small web app that wraps your trained model. Submit a GitHub repo link on the Team Dashboard. Bonus points for MLOps additions, caching, and polished UI/UX.
+Fully automated judging
+
+All Phase 1 submissions are evaluated automatically — no human review. Your code is executed in a sandboxed container and results stream to your browser in real time.
+Quick Start
+From sign-up to your first score in 5 steps.
+
+1
+Register
+Head to the sign-up page and register with the same email you used in the registration form. Your team is pre-assigned — you’ll be placed automatically.
+2
+Check your team
+Go to the Team Dashboard and confirm your team and teammates are correct. If something’s off, contact the organizers immediately.
+3
+Train your model
+Download the dataset, explore, and train your model using any Python ML framework you want. Then fill in the 3 functions in solution.py (see template below).
+4
+Package & submit
+Zip exactly 3 files: solution.py, model.*, and requirements.txt. Upload the .zip on the Submit page.
+5
+Get your score
+Evalda installs your dependencies, runs your code against the hidden validation set, and streams your score back in real time. Track all attempts on the Team Dashboard.
+Platform Overview
+Evalda has four main areas, all accessible from the navigation bar.
+
+Submit
+→
+Upload your .zip submission and watch the evaluation progress live.
+
+Team
+→
+See your team, members, submission history, and submit your Phase 2 repo link.
+
+Leaderboard
+→
+Anonymous rankings updated after every accepted submission. Your team name is only visible to you.
+
+Docs
+→
+You are here. Everything you need to know about the competition.
+
+Phase 1: Build Your Model
+The Dataset
+Dataset will be shared at competition start
+
+The dataset and full task description will be released when Phase 1 begins. You will receive a training CSV with feature columns and a label column. Your goal is to predict the labels on a hidden validation set as accurately as possible.
+The solution.py Template
+Your submission must include a solution.py file with exactly these 3 functions. Do not change the function signatures.
+
+solution.py
+Copy
+# Import your libraries here
+ 
+def preprocess(df):
+    # Preprocess the raw input DataFrame.
+    # Receives the test data WITHOUT the label column.
+    return df
+ 
+def load_model():
+    # Load and return your trained model from disk.
+    # Example: return joblib.load('model.pkl')
+    model = None
+    return model
+ 
+def predict(df, model):
+    # Generate predictions on the preprocessed DataFrame.
+    # This is the only function that is timed.
+    predictions = None
+    return predictions
+Evalda calls these functions in order: preprocess → load_model → predict. Only predict is timed for the latency metric.
+
+The Environment
+Your code runs inside a Python 3.10 container with the following packages pre-installed:
+
+Package	Version
+numpy	1.26.4
+scipy	1.11.4
+pandas	2.1.4
+scikit-learn	1.3.2
+xgboost	2.0.3
+lightgbm	4.6.0
+catboost	1.2.3
+torch	2.6.0
+torchvision	0.21.0
+torchaudio	2.6.0
+tensorflow	2.14.0
+joblib	1.3.2
+tqdm	4.66.1
+cloudpickle	3.0.0
+Need extra packages?
+
+List them in your requirements.txt and they’ll be installed before your code runs. You can add new packages, but you cannot modify the versions of the pre-installed ones.
+Packaging Your Submission
+Your .zip must contain exactly these 3 files at the root level (no nested folders):
+
+submission.zip
+solution.py
+# required — your 3 functions
+model.pkl
+# required — your trained model (model.*)
+requirements.txt
+# required — can be empty
+Model file naming
+
+Your model file must be named model.* (e.g. model.pkl, model.pt, model.onnx). Exactly one model file is allowed. The requirements.txt is required even if empty.
+Scoring System
+Your final score is a composite of three factors: Macro F1-Score, model file size, and inference latency.
+
+formula
+Copy
+score = macro_f1 × size_penalty × duration_penalty
+ 
+where:
+  macro_f1         = (1/N) Σ F1_i   (averaged over all N classes)
+  size_penalty     = max(0.5, 1 − model_size_mb / 200)
+  duration_penalty = max(0.5, 1 − predict_duration_seconds / 10)
+Both penalties floor at 0.5, so even a huge or slow model can't lose more than half its F1 score. That said, a smaller and faster model will rank higher at equal F1.
+
+Metrics Breakdown
+Macro F1-Score
+The harmonic mean of precision and recall, computed per class and averaged. Treats all 10 insurance bundles equally.
+
+Size Penalty
+Penalizes large model files. A 0 MB model gets no penalty (1.0), a 100 MB model gets 0.5. Floors at 0.5.
+
+Latency Penalty
+Penalizes slow predictions. 0 s gets no penalty (1.0), 5 s gets 0.5. Floors at 0.5. Only predict() is timed.
+
+Final Score
+Your leaderboard score. Higher is better. Only your best accepted submission counts.
+
+Optimize all three
+
+Don't just chase F1. A lightweight, fast model with slightly lower F1 can outscore a bloated one. Balance all three metrics.
+Submission Limits
+Each team has 20 submission attempts for the entire competition. Only accepted submissions count toward this limit — rejected ones are free.
+
+consumes
+Accepted
+
+Passes all checks, code executes successfully, and a score is returned.
+
+free
+Rejected — security check
+
+Invalid .zip, wrong file structure, missing required files, or exceeds size limit.
+
+free
+Rejected — build failure
+
+Dependencies from requirements.txt failed to install.
+
+free
+Rejected — runtime error
+
+Your code threw an exception or timed out during execution.
+
+Your remaining attempts are always visible on the Submit page.
+
+Leaderboard
+The leaderboard is anonymous by design — team names are hidden from everyone. You can only see your own team’s name on the board. Only your best accepted score is shown.
+
+Blind window
+
+During the final 2 hours of the competition, the leaderboard freezes. Scores are still recorded but rankings won’t update until the competition ends. Keep submitting — your best score still counts.
+Phase 2: Build Your App
+In the final 3 hours, your goal shifts from model training to building a complete application around your model.
+
+•
+Inference API — Serve predictions through an HTTP endpoint.
+•
+Web App — Build a small frontend that wraps your model in a user-friendly interface.
+•
+Submit — Paste your GitHub repository link on the Team Dashboard. No automated judging for Phase 2 — it will be reviewed manually.
+Bonus points
+
+Any effort beyond the basics will earn extra credit: MLOps additions (CI/CD, containerization, monitoring), caching layers, polished UI/UX, or creative features. There are no fixed criteria — impress the reviewers.
+Your Team
+Teams are pre-assigned based on the registration form you filled out before the competition. When you sign up on Evalda with the same email, you’ll be placed into your team automatically.
+
+There is nothing to create or join. Just register and verify on the Team Dashboard that everything looks correct. If there’s an issue, contact the organizers immediately.
+
+Competition Rules
+By participating you agree to the following. Violations may result in disqualification.
+
+—
+Teams are exactly 4 members.
+—
+Each participant belongs to exactly one team.
+—
+All submissions must be the team’s own original work.
+—
+Sharing code, model files, or solutions between teams is strictly prohibited.
+—
+Probing the auto-judger to reverse-engineer the hidden validation set is not allowed.
+—
+Any attempt to exploit or circumvent the submission system results in immediate disqualification.
+—
+Use of publicly available datasets and pre-trained models strictly prohibited.
+—
+Each team has 20 accepted submission attempts. Use them wisely.
+Academic Integrity
+DataQuest is an academic competition. Submitted solutions must be designed and implemented by your team. Plagiarism — including copying solutions from other teams or prior competitions — is grounds for disqualification.
+
+Zero-tolerance policy
+
+Sharing solution archives between teams — even as "reference" — is a violation. Both the sharing and receiving teams will be disqualified.
+Allowed Model Formats
+Your model file must be named model.<ext> using one of the following extensions:
+
+Extension	Framework
+.pkl	scikit-learn / joblib
+.joblib	joblib
+.pt / .pth	PyTorch
+.h5	Keras / TensorFlow
+.pb	TensorFlow SavedModel
+.keras	Keras 3
+.tflite	TensorFlow Lite
+.onnx	ONNX
+.safetensors	Hugging Face safetensors
+.bin	Generic binary
+Submission Constraints
+Constraint	Value
+Max upload size	50 MB
+Accepted format	.zip only
+Archive structure	Flat (no nested folders)
+Required files	solution.py, model.*, requirements.txt
+Model files	Exactly 1, named model.*
+Python version	3.10
+Execution timeout	120 seconds
+Memory limit	1 GB
+Network access	None (sandboxed)
+Need help?
+
+If a submission is stuck in "Processing" for too long, check the Submissions History on your Team Dashboard for details. If the issue persists, reach out to the organizers with your submission ID.

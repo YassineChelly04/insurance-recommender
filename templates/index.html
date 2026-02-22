@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Bundle Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Insurance Bundle Recommender</h1>
+            <p>Get personalized insurance recommendations based on your profile</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="form">Prediction Form</button>
+            <button class="tab-button" data-tab="bundles">Bundle Info</button>
+        </nav>
+
+        <!-- Form Tab -->
+        <div id="form" class="tab-content active">
+            <form id="predictionForm" class="prediction-form">
+                <fieldset>
+                    <legend>Personal Information</legend>
+                    <div class="form-group">
+                        <label for="user_id">User ID:</label>
+                        <input type="text" id="user_id" name="User_ID" value="USR_TEST_001" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="adult_deps">Adult Dependents:</label>
+                            <input type="number" id="adult_deps" name="Adult_Dependents" value="2" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="child_deps">Child Dependents:</label>
+                            <input type="number" id="child_deps" name="Child_Dependents" value="1" min="0" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Financial Information</legend>
+                    <div class="form-group">
+                        <label for="income">Annual Income ($):</label>
+                        <input type="number" id="income" name="Estimated_Annual_Income" value="75000" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="employment">Employment Status:</label>
+                        <select id="employment" name="Employment_Status" required>
+                            <option value="Employed">Employed</option>
+                            <option value="Self-Employed">Self-Employed</option>
+                            <option value="Unemployed">Unemployed</option>
+                            <option value="Retired">Retired</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Policy & Coverage Preferences</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="deductible">Deductible Tier:</label>
+                            <select id="deductible" name="Deductible_Tier" required>
+                                <option value="Tier_1_High_Ded">High Deductible</option>
+                                <option value="Tier_2_Mid_Ded">Mid Deductible</option>
+                                <option value="Tier_3_Low_Ded">Low Deductible</option>
+                                <option value="Tier_4_Zero_Ded">Zero Deductible</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment">Payment Schedule:</label>
+                            <select id="payment" name="Payment_Schedule" required>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Quarterly">Quarterly</option>
+                                <option value="Annual">Annual</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehicles">Vehicles on Policy:</label>
+                            <input type="number" id="vehicles" name="Vehicles_on_Policy" value="1" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="riders">Custom Riders:</label>
+                            <input type="number" id="riders" name="Custom_Riders_Requested" value="0" min="0" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Policy History</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="years_no_claims">Years Without Claims:</label>
+                            <input type="number" id="years_no_claims" name="Years_Without_Claims" value="3" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prev_policy_months">Previous Policy Duration (months):</label>
+                            <input type="number" id="prev_policy_months" name="Previous_Policy_Duration_Months" value="24" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="grace_extensions">Grace Period Extensions:</label>
+                            <input type="number" id="grace_extensions" name="Grace_Period_Extensions" value="0" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="days_since_quote">Days Since Quote:</label>
+                            <input type="number" id="days_since_quote" name="Days_Since_Quote" value="5" min="0" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Additional Information</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="policy_year">Policy Start Year:</label>
+                            <input type="number" id="policy_year" name="Policy_Start_Year" value="2024" min="2000" max="2100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="policy_month">Policy Start Month:</label>
+                            <select id="policy_month" name="Policy_Start_Month" required>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="region">Region Code:</label>
+                            <input type="text" id="region" name="Region_Code" value="US_WEST" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="broker_agency">Broker Agency Type:</label>
+                            <select id="broker_agency" name="Broker_Agency_Type" required>
+                                <option value="Direct">Direct</option>
+                                <option value="Independent">Independent</option>
+                                <option value="Captive">Captive</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="submit-btn">Get Recommendation</button>
+            </form>
+
+            <div id="result" class="result-container" style="display: none;">
+                <div class="result-card">
+                    <h2>Recommended Bundle</h2>
+                    <div id="resultContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bundles Info Tab -->
+        <div id="bundles" class="tab-content">
+            <div id="bundlesInfo" class="bundles-grid"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 DataQuest Insurance Recommender | Powered by CatBoost ML</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

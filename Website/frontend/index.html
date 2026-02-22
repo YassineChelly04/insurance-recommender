@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InsureAI — Intelligent Bundle Recommendations</title>
+    <meta name="description" content="AI-powered insurance bundle recommendation system for insurance brokers. Get instant ML predictions for customer profiles." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ── Background orbs ─────────────────────────────────────────────── -->
+    <div class="bg-orb orb-1" aria-hidden="true"></div>
+    <div class="bg-orb orb-2" aria-hidden="true"></div>
+    <div class="bg-orb orb-3" aria-hidden="true"></div>
+
+    <!-- ── Header ─────────────────────────────────────────────────────── -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z" fill="currentColor" opacity="0.9"/>
+                        <path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span class="logo-text">InsureAI</span>
+            </div>
+            <div class="header-meta">
+                <span class="badge badge-live">
+                    <span class="pulse-dot"></span>
+                    Live Model
+                </span>
+                <span class="version-tag">v1.0 · XGBoost</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── Main Content ──────────────────────────────────────────────── -->
+    <main class="main">
+        <div class="container">
+
+            <!-- Hero -->
+            <section class="hero">
+                <div class="hero-label">Powered by Machine Learning</div>
+                <h1 class="hero-title">Insurance Bundle<br/><span class="gradient-text">Recommendation Engine</span></h1>
+                <p class="hero-subtitle">
+                    Enter a customer profile below and receive an AI-driven prediction for the optimal insurance bundle — with confidence scores and top alternatives.
+                </p>
+            </section>
+
+            <!-- Main layout: form + results side-by-side -->
+            <div class="workspace">
+
+                <!-- ── Input Form ──────────────────────────────────── -->
+                <section class="card form-card" id="input-section">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="card-title">Customer Profile</h2>
+                            <p class="card-subtitle">Fill in the customer attributes</p>
+                        </div>
+                    </div>
+
+                    <form id="predict-form" novalidate>
+
+                        <!-- Financial Section -->
+                        <fieldset class="form-section">
+                            <legend class="section-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                Financial & Income
+                            </legend>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="income">Annual Income ($)</label>
+                                    <input type="number" id="income" name="estimated_annual_income" value="65000" min="0" step="1000" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="employment">Employment Status</label>
+                                    <select id="employment" name="employment_status">
+                                        <option value="Employed_FullTime" selected>Full-Time Employed</option>
+                                        <option value="Employed_PartTime">Part-Time Employed</option>
+                                        <option value="Self_Employed">Self-Employed</option>
+                                        <option value="Unemployed">Unemployed</option>
+                                        <option value="Retired">Retired</option>
+                                        <option value="Student">Student</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Dependents Section -->
+                        <fieldset class="form-section">
+                            <legend class="section-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                Dependents
+                            </legend>
+                            <div class="form-grid form-grid-3">
+                                <div class="form-group">
+                                    <label for="adult_dep">Adults</label>
+                                    <input type="number" id="adult_dep" name="adult_dependents" value="1" min="0" max="10" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="child_dep">Children</label>
+                                    <input type="number" id="child_dep" name="child_dependents" value="1" min="0" max="10" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="infant_dep">Infants</label>
+                                    <input type="number" id="infant_dep" name="infant_dependents" value="0" min="0" max="5" />
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Policy History -->
+                        <fieldset class="form-section">
+                            <legend class="section-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="2"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"/></svg>
+                                Policy History
+                            </legend>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="policy_dur">Policy Duration (months)</label>
+                                    <input type="number" id="policy_dur" name="previous_policy_duration_months" value="24" min="0" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="years_no_claims">Years Without Claims</label>
+                                    <input type="number" id="years_no_claims" name="years_without_claims" value="3" min="0" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="grace">Grace Period Extensions</label>
+                                    <input type="number" id="grace" name="grace_period_extensions" value="0" min="0" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="amendments">Policy Amendments</label>
+                                    <input type="number" id="amendments" name="policy_amendments_count" value="1" min="0" />
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Coverage Details -->
+                        <fieldset class="form-section">
+                            <legend class="section-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/></svg>
+                                Coverage Details
+                            </legend>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="vehicles">Vehicles on Policy</label>
+                                    <input type="number" id="vehicles" name="vehicles_on_policy" value="1" min="0" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="riders">Custom Riders</label>
+                                    <input type="number" id="riders" name="custom_riders_requested" value="0" min="0" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="deductible">Deductible Tier</label>
+                                    <select id="deductible" name="deductible_tier">
+                                        <option value="Tier_1_High_Ded">Tier 1 — High Deductible</option>
+                                        <option value="Tier_2_Mid_Ded" selected>Tier 2 — Mid Deductible</option>
+                                        <option value="Tier_3_Low_Ded">Tier 3 — Low Deductible</option>
+                                        <option value="Tier_4_Zero_Ded">Tier 4 — Zero Deductible</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="payment">Payment Schedule</label>
+                                    <select id="payment" name="payment_schedule">
+                                        <option value="Monthly" selected>Monthly</option>
+                                        <option value="Quarterly">Quarterly</option>
+                                        <option value="Semi_Annual">Semi-Annual</option>
+                                        <option value="Annual">Annual</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Acquisition -->
+                        <fieldset class="form-section">
+                            <legend class="section-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="2"/></svg>
+                                Acquisition & Broker
+                            </legend>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="channel">Acquisition Channel</label>
+                                    <select id="channel" name="acquisition_channel">
+                                        <option value="Direct_Website" selected>Direct Website</option>
+                                        <option value="Affiliate_Group">Affiliate Group</option>
+                                        <option value="Corporate_Partner">Corporate Partner</option>
+                                        <option value="Aggregator_Site">Aggregator Site</option>
+                                        <option value="Broker_Referral">Broker Referral</option>
+                                        <option value="Social_Media">Social Media</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="broker_type">Broker Agency Type</label>
+                                    <select id="broker_type" name="broker_agency_type">
+                                        <option value="">No Broker</option>
+                                        <option value="National_Corporate" selected>National Corporate</option>
+                                        <option value="Urban_Boutique">Urban Boutique</option>
+                                        <option value="Regional_Independent">Regional Independent</option>
+                                        <option value="Online_Direct">Online Direct</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="region">Region Code</label>
+                                    <input type="text" id="region" name="region_code" value="US-CA" placeholder="e.g. US-CA, FR-IDF" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="days_quote">Days Since Quote</label>
+                                    <input type="number" id="days_quote" name="days_since_quote" value="7" min="0" />
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Policy Dates -->
+                        <fieldset class="form-section">
+                            <legend class="section-label">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+                                Policy Start Date
+                            </legend>
+                            <div class="form-grid form-grid-3">
+                                <div class="form-group">
+                                    <label for="start_month">Month</label>
+                                    <select id="start_month" name="policy_start_month">
+                                        <option>January</option><option>February</option>
+                                        <option>March</option><option selected>April</option>
+                                        <option>May</option><option>June</option>
+                                        <option>July</option><option>August</option>
+                                        <option>September</option><option>October</option>
+                                        <option>November</option><option>December</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="start_year">Year</label>
+                                    <input type="number" id="start_year" name="policy_start_year" value="2024" min="2020" max="2030" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="start_week">Week</label>
+                                    <input type="number" id="start_week" name="policy_start_week" value="15" min="1" max="53" />
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <button type="submit" class="btn-predict" id="submit-btn">
+                            <span class="btn-spinner" id="btn-spinner" aria-hidden="true"></span>
+                            <span class="btn-text" id="btn-text">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                Predict Bundle
+                            </span>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- ── Results Panel ────────────────────────────────── -->
+                <section class="results-panel" id="results-section">
+
+                    <!-- Empty state -->
+                    <div class="empty-state" id="empty-state">
+                        <div class="empty-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        </div>
+                        <h3>Ready to Predict</h3>
+                        <p>Fill in the customer profile on the left and click <strong>Predict Bundle</strong> to get AI recommendations.</p>
+                    </div>
+
+                    <!-- Result content (hidden until prediction runs) -->
+                    <div class="result-content hidden" id="result-content">
+
+                        <!-- Top Prediction -->
+                        <div class="card result-card" id="top-result-card">
+                            <div class="card-header">
+                                <div class="card-icon result-icon">🏆</div>
+                                <div>
+                                    <h2 class="card-title">Recommended Bundle</h2>
+                                    <p class="card-subtitle">Highest confidence prediction</p>
+                                </div>
+                            </div>
+                            <div class="top-prediction">
+                                <div class="bundle-badge" id="bundle-badge">—</div>
+                                <div class="bundle-info">
+                                    <div class="bundle-name" id="bundle-name">—</div>
+                                    <div class="confidence-row">
+                                        <span class="confidence-label">Confidence</span>
+                                        <span class="confidence-value" id="confidence-value">—</span>
+                                    </div>
+                                    <div class="confidence-bar-track">
+                                        <div class="confidence-bar-fill" id="confidence-bar" style="width:0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Top 3 Alternatives -->
+                        <div class="card result-card" id="top3-card">
+                            <div class="card-header">
+                                <div class="card-icon">📊</div>
+                                <div>
+                                    <h2 class="card-title">Top 3 Recommendations</h2>
+                                    <p class="card-subtitle">Ranked by confidence score</p>
+                                </div>
+                            </div>
+                            <div id="top3-list" class="top3-list"></div>
+                        </div>
+
+                        <!-- Key Factors -->
+                        <div class="card result-card" id="factors-card">
+                            <div class="card-header">
+                                <div class="card-icon">🧠</div>
+                                <div>
+                                    <h2 class="card-title">Key Factors</h2>
+                                    <p class="card-subtitle">Profile attributes that influenced this prediction</p>
+                                </div>
+                            </div>
+                            <ul id="factors-list" class="factors-list"></ul>
+                        </div>
+
+                    </div>
+
+                    <!-- Error state -->
+                    <div class="error-state hidden" id="error-state">
+                        <div class="error-icon">⚠️</div>
+                        <h3>Prediction Failed</h3>
+                        <p id="error-message">An error occurred while calling the API.</p>
+                        <button class="btn-retry" id="retry-btn">Try Again</button>
+                    </div>
+
+                </section>
+            </div>
+
+            <!-- ── API Status Bar ─────────────────────────────────── -->
+            <div class="status-bar">
+                <div class="status-item" id="api-status">
+                    <span class="status-dot" id="status-dot"></span>
+                    <span id="status-text">Checking API…</span>
+                </div>
+                <div class="status-item">
+                    <a href="http://localhost:8000/docs" target="_blank" rel="noopener" class="docs-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" stroke-width="2"/><polyline points="15,3 21,3 21,9" stroke="currentColor" stroke-width="2"/><line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" stroke-width="2"/></svg>
+                        Swagger Docs
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>InsureAI · Intelligent Insurance Bundle Recommendation System · Hackathon 2026</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
