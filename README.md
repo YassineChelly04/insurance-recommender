@@ -16,6 +16,8 @@ Build a model that predicts which **`Purchased_Coverage_Bundle`** (integer 0–9
 
 This is a **multi-class classification** problem with 10 classes.
 
+![Project Screenshot](/static/1.png)
+
 ---
 
 ## Target Variable Mapping
