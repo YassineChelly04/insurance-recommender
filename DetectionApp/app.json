@@ -1,0 +1,57 @@
+{
+  "expo": {
+    "name": "DetectionApp",
+    "slug": "detection-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.yourcompany.detectionapp",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to detect objects in real time using on-device AI.",
+        "NSPhotoLibraryAddUsageDescription": "This app saves annotated detection images to your photo library.",
+        "NSPhotoLibraryUsageDescription": "This app reads images from your photo library for batch detection.",
+        "NSLocationWhenInUseUsageDescription": "Location is used to optionally tag scan results. This is opt-in."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.yourcompany.detectionapp",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "$(PRODUCT_NAME) needs camera access to detect objects in real time."
+        }
+      ],
+      "expo-media-library",
+      "expo-secure-store",
+      "expo-sqlite"
+    ],
+    "extra": {
+      "MODEL_UPDATE_BASE_URL": "https://your-model-server.com",
+      "MODEL_UPDATE_CERT_HASH": "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+    }
+  }
+}
