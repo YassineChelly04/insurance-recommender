@@ -1,0 +1,13 @@
+node_modules/
+.expo/
+dist/
+build/
+models/
+*.tflite
+*.mlpackage
+*.onnx
+*.pt
+.env
+android/
+ios/
+web-build/
